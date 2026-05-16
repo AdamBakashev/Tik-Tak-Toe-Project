@@ -309,3 +309,107 @@ Accepted
 ### Risks
 - Verbindungsabbrüche müssen behandelt werden
 - Fehler in der WebSocket-Logik können Spielfluss stören
+
+
+# ADR 3: Turn Handling Implementation (Frontend vs Backend Logic)
+
+## Title
+Wahl der Implementierung für das Abwechseln der Spielerzüge im TicTacToe-Spiel
+
+---
+
+## Context
+Wir entwickeln ein browserbasiertes TicTacToe-Spiel für zwei Spieler. Die Spieler müssen abwechselnd ihre Zeichen (X und O) auf einem 3x3 Spielfeld setzen können.
+
+---
+
+## Problem
+Wir müssen entscheiden, wo die Spiellogik für das Wechseln der Spieler (Turns) implementiert wird:
+- im Frontend (JavaScript im Browser)
+- oder im Backend (Spring Boot Server)
+
+---
+
+## Constraints
+- Das Spiel muss im Browser funktionieren
+- Zwei Spieler müssen abwechselnd spielen können
+- Keine unnötige Komplexität (Studentenprojekt)
+- Schnelle Reaktion bei Spielzügen
+- Kein zwingendes echtes Multiplayer-Backend erforderlich
+
+---
+
+## Quality Objectives
+- Usability (einfache Bedienung)
+- Performance (sofortige Reaktion im Browser)
+- Einfachheit der Umsetzung
+- Stabilität der Spiellogik
+
+---
+
+## Alternatives
+
+### Option 1: Turn Logic im Frontend (JavaScript)
+Die gesamte Logik für Spielerwechsel wird im Browser mit JavaScript umgesetzt.
+
+**Vorteile:**
+- Sehr einfache Implementierung
+- Sofortige Reaktion ohne Server-Request
+- Kein Backend-Aufwand notwendig
+- Gut für Single-Page Anwendungen
+
+**Nachteile:**
+- Spielzustand nur im Browser gespeichert
+- Kein echtes serverseitiges Tracking
+- Nicht geeignet für komplexe Multiplayer-Systeme
+
+---
+
+### Option 2: Turn Logic im Backend (Spring Boot)
+Jeder Zug wird an den Server gesendet und dort verarbeitet. Der Server entscheidet, welcher Spieler am Zug ist.
+
+**Vorteile:**
+- Zentrale Kontrolle des Spielzustands
+- Erweiterbar für echtes Multiplayer-System
+- Saubere Trennung von Logik und UI
+
+**Nachteile:**
+- Mehr Komplexität
+- HTTP-Kommunikation für jeden Zug notwendig
+- Langsamere Reaktion im Vergleich zum Frontend
+
+---
+
+## Decision Evaluation
+Da das Projekt keine komplexe Multiplayer-Architektur verlangt und auf einfache Bedienbarkeit ausgelegt ist, ist eine Frontend-basierte Lösung ausreichend und effizient.
+
+---
+
+## Final Decision
+Wir implementieren die Turn-Logik im Frontend mit JavaScript. Der aktuelle Spieler wird lokal im Browser gespeichert und nach jedem Zug gewechselt.
+
+---
+
+## Status
+Accepted
+
+---
+
+## Consequences
+
+### Advantages
+- Sehr schnelle Benutzerinteraktion
+- Einfache Implementierung
+- Kein Backend-Overhead für Spielzüge
+- Gut geeignet für kleine Webspiele
+
+### Disadvantages
+- Kein serverseitig gesicherter Spielzustand
+- Manipulation im Browser theoretisch möglich
+- Nicht skalierbar für echte Online-Matches
+
+---
+
+## Risks
+- Spielzustand kann im Browser manipuliert werden
+- Keine zentrale Kontrolle über Spielregeln
