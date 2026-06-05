@@ -413,3 +413,73 @@ Accepted
 ## Risks
 - Spielzustand kann im Browser manipuliert werden
 - Keine zentrale Kontrolle über Spielregeln
+
+
+## ADR 4: Dependency Injection (Spring Boot vs. Service Locator)
+
+### Title
+Wahl des Patterns zur Verbesserung der Testbarkeit und Architektur
+
+### Context
+Wir entwickeln ein browserbasiertes TicTacToe-Spiel mit Java Spring Boot. Ziel ist eine gut testbare, modulare und wartbare Architektur.
+
+### Problem
+Es muss entschieden werden, wie Abhängigkeiten zwischen Klassen (z. B. Controller und mögliche Service-Klassen) verwaltet werden, sodass der Code gut testbar bleibt und keine starke Kopplung entsteht.
+
+### Constraints
+- einfache Architektur für Studentenprojekt  
+- gute Testbarkeit erforderlich  
+- geringe Kopplung zwischen Komponenten  
+- Erweiterbarkeit für zukünftige Features  
+
+### Quality Objectives
+- Testbarkeit  
+- Wartbarkeit  
+- Modularität  
+- geringe Kopplung  
+
+### Alternatives
+
+#### Dependency Injection (Spring Boot)
+**Vorteile:**
+- sehr gute Testbarkeit durch austauschbare Abhängigkeiten  
+- geringe Kopplung zwischen Klassen  
+- klare Trennung von Logik und Controller  
+- automatische Verwaltung durch Spring Container  
+
+**Nachteile:**
+- Framework-Abhängigkeit  
+- anfängliche Lernkurve  
+
+#### Service Locator Pattern
+**Vorteile:**
+- einfache zentrale Bereitstellung von Services  
+
+**Nachteile:**
+- versteckte Abhängigkeiten  
+- schlechter testbar  
+- starke Kopplung zwischen Klassen  
+- weniger moderne Architektur  
+
+### Decision Evaluation
+Dependency Injection ist besser geeignet für eine testbare und modulare Architektur. Spring Boot unterstützt dieses Pattern bereits standardmäßig.
+
+### Final Decision
+Wir verwenden Dependency Injection über Spring Boot zur Verwaltung von Abhängigkeiten.
+
+### Status
+Accepted
+
+### Consequences
+
+#### Advantages
+- hohe Testbarkeit  
+- geringe Kopplung  
+- klare Architektur durch Trennung von Verantwortlichkeiten  
+
+#### Disadvantages
+- Abhängigkeit vom Spring Framework  
+- etwas höhere Einstiegskomplexität  
+
+#### Risks
+- falsche Nutzung kann zu unklarer Architektur führen  
